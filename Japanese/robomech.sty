@@ -1,0 +1,183 @@
+%%
+%% robomec.sty (for Robomec2007)
+%%
+%% (c)Ryuma NIIYAMA, ISI Lab, The University of Tokyo,
+%% Feb. 18, 2007.
+%%
+
+%% LaTeX template
+%\documentclass[10pt,a4paper]{jsarticle}
+%\usepackage{robomec}
+%\usepackage[dvips]{graphicx}
+%\usepackage{tabularx,amsmath,amssymb}
+%\usepackage{txfonts,bm}
+%%
+%\title{}
+%\engtitle{}
+%\author{}
+%\engauthor{}
+%\abstract{}
+%\keyword{}
+%%
+%\begin{document}
+%\setlength{\baselineskip}{4.685mm}
+%\maketitle
+%\thispagestyle{empty}
+%
+%%text
+%
+%\begin{footnotesize}
+%\begin{thebibliography}{9}
+%%
+%\bibitem{book:Pfeifer:Understanding_Intelligence}
+%Rolf Pfeifer and Christian Scheier.
+%\newblock {\em Understanding Intelligence}.
+%\newblock The MIT Press, 1999.
+%%
+%\end{thebibliography}%
+%\end{footnotesize}
+%
+%\end{document}
+%%
+
+
+%%
+\pagestyle{empty}
+\twocolumn
+\sloppy
+\flushbottom
+
+%% Page Layout (height)
+\textheight 243.6truemm% 297mm(A4 height) - 25mm * 2
+		       % (\baselineskip=4.685mm * 52 line)
+\topmargin -1truein% Reset to zero
+\addtolength{\topmargin}{25truemm}% top margin
+\headheight 0truemm% header
+\headsep 0truemm% text-header separation
+\footskip 0truemm% footer(margin + height)
+
+%% Page Layout (width)
+\textwidth 180truemm% 210mm(A4 width) - 15mm * 2
+\oddsidemargin -1truein% Reset to zero
+\addtolength{\oddsidemargin}{15truemm}% left margin
+\columnsep 6truemm% column separation
+
+%% Title, MakeTitle
+\def\title#1{\gdef\@title{#1}}
+\def\engtitle#1{\gdef\@engtitle{#1}}
+\def\author#1{\gdef\@author{#1}}
+\def\engauthor#1{\gdef\@engauthor{#1}}
+\def\keyword#1{\gdef\@keyword{#1}}
+\long\def\abstract#1{\long\gdef\@abstract{#1}}%
+
+\def\@maketitle{%
+  \newpage\null
+  \centering
+    {\sffamily\gtfamily\Large \@title \par}% Title 14pt
+    \vskip .7em
+    {\large \@engtitle \par}% English Title 12pt
+    \vskip 1em
+    {\normalsize
+    \begin{tabular}[t]{l}%
+      \@author% Authors 10pt
+    \end{tabular}\par}
+    \vskip .7em
+    {\small \lineskip 0mm
+    \begin{tabular}[t]{l}%
+      \@engauthor% English Authors 9pt
+    \end{tabular}\par}
+  \@ifundefined{@abstract}{}{% Abstract 9pt
+     \small%
+     \vskip 1em
+     \begin{minipage}{160truemm}%
+      \hspace{2zw}\@abstract
+     \end{minipage}%
+  }%
+  \@ifundefined{@keyword}{}{% Keyword 9pt
+     \small%
+     \vskip 1em
+     \begin{minipage}{160mm}%
+      {\bf \textit{Key Words}: }\@keyword
+     \end{minipage}%
+  }%
+  \vskip 2em
+}%
+
+%% Section, SubSection
+\def\thesection{\sffamily\bfseries\arabic{section}.}
+\def\thesubsection{\sffamily\bfseries\arabic{section}.\arabic{subsection}}
+
+% \@sect{NAME}{LEVEL}{INDENT}{BEFORESKIP}{AFTERSKIP}{STYLE}{ARG1}{ARG2}
+\def\section{\@startsection {section}{1}{\z@}%
+ {.1ex plus .3ex minus .1ex}% before skip
+ {.5ex plus .2ex}% after skip
+ {\center\sffamily\gtfamily\large}}% section 10pt
+%old {.8ex plus .5ex minus .2ex}{.5ex plus .2ex}{\center\sffamily\gtfamily\normalsize}}% 10pt, Boldface
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+  {.8ex plus .5ex minus .2ex}% before skip
+  {.5ex plus .2ex}% after skip
+  {\sffamily\gtfamily\normalsize}}% subsection 9pt
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+   {.8ex plus .5ex minus .2ex}% before skip
+   {.5ex plus .2ex}% after skip
+   {\sffamily\gtfamily\normalsize}}% subsubsection 9pt
+\def\paragraph{\@startsection{paragraph}{4}{\z@}%
+    {0.5ex plus .3ex minus .2ex}{-1zw}% not break
+    {\sffamily\gtfamily\normalsize}}% paragraph 9pt
+
+%% Figure, Table
+\def\figref#1{図\ref{#1}}
+\def\tabref#1{表\ref{#1}}
+\def\equref#1{式(\ref{#1})}
+\def\secref#1{\ref{#1}節 }
+
+\def\fnum@figure{Fig.~\thefigure~}
+\def\fnum@table{Table\ \thetable~}
+
+%% nobreak citation
+\def\@cite#1{\nobreak[#1]}
+
+%% caption and long caption
+\long\def\@caption#1[#2]#3{\par\addcontentsline{\csname
+  ext@#1\endcsname}{#1}{\protect\numberline{\csname
+  the#1\endcsname}{\ignorespaces #2}}\begingroup
+    \@parboxrestore
+    \small% caption 9pt
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup}
+
+\long\def\@makecaption#1#2{
+   \vskip 5\p@
+   \setbox\@tempboxa\hbox{#1 #2}
+   \ifdim \wd\@tempboxa >\hsize% if long caption
+     \begin{list}{#1}{
+       \leftmargin 2zw \itemindent 0ex \labelsep 1ex%
+       \labelwidth \leftmargin%
+       \addtolength{\labelwidth}{-\itemindent}%
+       \addtolength{\labelwidth}{-\labelsep}%
+       \rightmargin=\leftmargini%
+       \addtolength{\rightmargin}{-\itemindent}}%
+       \item #2
+     \end{list}\par%
+   \else
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+   \fi}
+
+%% bibliography
+\renewcommand{\bibname}{文\hspace{1zw}献}
+\def\thebibliography#1{
+  \vskip 1zh plus .2ex minus .2ex
+  \center{\large\sffamily\gtfamily \bibname}\par\@mkboth{\refname}{\refname}
+  \vskip .4zh
+  \list{[\arabic{enumi}]}% label [1], [2], ...
+    {\settowidth\labelwidth{\@biblabel{#1})}
+     \leftmargin\labelwidth
+     \advance \leftmargin by \labelsep
+     \usecounter{enumi}}
+  \def\newblock{\hskip .11em plus .33em minus .07em}%
+  \sloppy
+  \clubpenalty=4000
+  \widowpenalty=4000
+  \sfcode`\.\@m}%
+\let\endthebibliography=\endlist
+%\def\@cite#1#2{$^{\hbox{\scriptsize{#1\if@tempswa , #2\fi})}}$}
