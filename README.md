@@ -1,1 +1,1 @@
-# tex_template
+# tex_templatesudo aptitude install texlive texlive-latex-extra ptex-bin dvipsk-ja cmap-adobe-japan1 cmap-adobe-japan2 gs-cjk-resource
